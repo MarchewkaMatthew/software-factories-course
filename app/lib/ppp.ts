@@ -1,6 +1,6 @@
 // ─── PPP (Purchasing Power Parity) Config ───
 // Hardcoded tier definitions and country-to-tier mappings.
-// Tiers determine the discount percentage applied at purchase time.
+// PPP Tiers determine the PPP Discount percentage applied at purchase time.
 
 export const PPP_TIERS = {
   1: { discount: 0, label: "Full Price" },

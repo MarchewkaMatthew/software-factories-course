@@ -375,7 +375,7 @@ export function HydrateFallback() {
   );
 }
 
-export default function CourseCatalog({ loaderData }: Route.ComponentProps) {
+export default function CourseBrowser({ loaderData }: Route.ComponentProps) {
   const { courses, categories, search, category, currentUserId } = loaderData;
   const [searchParams] = useSearchParams();
   const navigation = useNavigation();

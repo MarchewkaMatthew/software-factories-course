@@ -46,7 +46,7 @@ function findPurchase(userId: number, courseId: number) {
 // One place that answers "who is this, and what may they do with this course?".
 //
 // getAccess never throws — the lesson page needs to render a paywall preview for
-// signed-out and unenrolled visitors rather than erroring. The require* wrappers
+// logged-out and unenrolled visitors rather than erroring. The require* wrappers
 // are built on it for the routes that should just reject.
 //
 // Uses positional parameters (project convention).
@@ -55,9 +55,9 @@ export type Access = {
   userId: number | null;
   user: ReturnType<typeof getUserById>;
   isAdmin: boolean;
-  /** The instructor who owns this specific course. */
-  isOwningInstructor: boolean;
-  /** Owning instructor or admin — the people who speak for the course. */
+  /** The Course Instructor of this specific course. */
+  isCourseInstructor: boolean;
+  /** Course Instructor or Admin — the Staff who answer for the course. */
   isStaff: boolean;
   enrolled: boolean;
   pppBlocked: boolean;
@@ -74,7 +74,7 @@ const SIGNED_OUT: Access = {
   userId: null,
   user: undefined,
   isAdmin: false,
-  isOwningInstructor: false,
+  isCourseInstructor: false,
   isStaff: false,
   enrolled: false,
   pppBlocked: false,
@@ -95,8 +95,8 @@ export async function getAccess(
 
   const course = getCourseById(courseId);
   const isAdmin = user.role === UserRole.Admin;
-  const isOwningInstructor = course?.instructorId === userId;
-  const isStaff = isAdmin || isOwningInstructor;
+  const isCourseInstructor = course?.instructorId === userId;
+  const isStaff = isAdmin || isCourseInstructor;
   const enrolled = isUserEnrolled(userId, courseId);
 
   // PPP only restricts students who bought at a discount — staff are exempt.
@@ -121,7 +121,7 @@ export async function getAccess(
     userId,
     user,
     isAdmin,
-    isOwningInstructor,
+    isCourseInstructor,
     isStaff,
     enrolled,
     pppBlocked: ppp.blocked,
@@ -132,7 +132,7 @@ export async function getAccess(
 }
 
 /**
- * Throws 401 unless someone is signed in. Returns their user id.
+ * Throws 401 unless someone is logged in. Returns their user id.
  */
 export async function requireUserId(request: Request): Promise<number> {
   const userId = await getCurrentUserId(request);
@@ -143,7 +143,7 @@ export async function requireUserId(request: Request): Promise<number> {
 }
 
 /**
- * Throws 401 when signed out, 403 when the user can't see the course's content.
+ * Throws 401 when logged out, 403 when the user can't see the course's content.
  * Use in actions — loader guards don't protect actions.
  */
 export async function requireContentAccess(
@@ -164,7 +164,7 @@ export async function requireContentAccess(
 }
 
 /**
- * Throws unless the user is the course's own instructor, or an admin.
+ * Throws unless the user is the course's Course Instructor, or an Admin.
  */
 export async function requireStaff(
   request: Request,
@@ -184,7 +184,7 @@ export async function requireStaff(
 }
 
 /**
- * Throws unless the user is an instructor or an admin, without tying them to a
+ * Throws unless the user is an Instructor or an Admin, without tying them to a
  * particular course — for pages that span all of someone's courses.
  */
 export async function requireInstructorOrAdmin(request: Request) {

@@ -1174,7 +1174,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       title = "Not found";
       message = "The quiz, lesson, or course you're looking for doesn't exist.";
     } else if (error.status === 401) {
-      title = "Sign in required";
+      title = "Log in required";
       message =
         typeof error.data === "string"
           ? error.data

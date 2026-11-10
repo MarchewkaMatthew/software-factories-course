@@ -23,7 +23,7 @@ export type RenderedComment = {
     id: number;
     name: string;
     avatarUrl: string | null;
-    isInstructor: boolean;
+    isCourseInstructor: boolean;
     isAdmin: boolean;
   };
   replies: RenderedComment[];
@@ -236,7 +236,7 @@ function CommentItem({
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-sm font-medium">{comment.author.name}</span>
-            {comment.author.isInstructor && <AuthorBadge label="Instructor" />}
+            {comment.author.isCourseInstructor && <AuthorBadge label="Instructor" />}
             {comment.author.isAdmin && <AuthorBadge label="Admin" />}
             <span
               className="text-xs text-muted-foreground"
@@ -261,7 +261,7 @@ function CommentItem({
                 commentId={comment.id}
                 defaultValue={comment.body}
                 placeholder="Edit your comment"
-                submitLabel="Save changes"
+                submitLabel="Save Changes"
                 autoFocus
                 onDone={() => setEditing(false)}
               />
@@ -290,7 +290,7 @@ function CommentItem({
                 intent="create-comment"
                 parentId={comment.id}
                 placeholder={`Reply to ${comment.author.name}`}
-                submitLabel="Post reply"
+                submitLabel="Post Reply"
                 autoFocus
                 onDone={() => setReplying(false)}
               />
@@ -347,7 +347,7 @@ export function CommentThread({
 }: {
   comments: RenderedComment[];
   currentUserId: number | null;
-  /** Owning instructor or admin — may delete anyone's comment. */
+  /** Staff (Course Instructor or Admin) — may delete anyone's comment. */
   canModerate: boolean;
   canPost: boolean;
   instructorName: string;
@@ -357,7 +357,7 @@ export function CommentThread({
       <CardContent className="p-6">
         <div className="mb-4 flex items-center gap-2">
           <MessageSquare className="size-5 text-primary" />
-          <h2 className="text-xl font-semibold">Questions &amp; Discussion</h2>
+          <h2 className="text-xl font-semibold">Comments</h2>
         </div>
 
         {comments.length === 0 ? (
@@ -388,7 +388,7 @@ export function CommentThread({
             <CommentForm
               intent="create-comment"
               placeholder="Ask a question or share what you found..."
-              submitLabel="Post comment"
+              submitLabel="Post Comment"
             />
           </div>
         )}

@@ -611,7 +611,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
   if (isRouteErrorResponse(error)) {
     if (error.status === 401) {
-      title = "Sign in required";
+      title = "Log in required";
       message = typeof error.data === "string" ? error.data : "Please select a user from the DevUI panel.";
     } else if (error.status === 403) {
       title = "Access denied";

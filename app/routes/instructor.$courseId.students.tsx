@@ -314,7 +314,7 @@ export default function InstructorStudentRoster({
         className="mb-4 inline-flex items-center text-sm text-muted-foreground hover:text-foreground"
       >
         <ArrowLeft className="mr-1 size-4" />
-        Back to Course Editor
+        Back to Edit Course Page
       </Link>
 
       <div className="mb-8">
@@ -458,7 +458,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       message =
         "The course you're looking for doesn't exist or may have been removed.";
     } else if (error.status === 401) {
-      title = "Sign in required";
+      title = "Log in required";
       message =
         typeof error.data === "string"
           ? error.data

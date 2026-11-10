@@ -86,7 +86,7 @@ type CommentAuthor = {
   id: number;
   name: string;
   avatarUrl: string | null;
-  isInstructor: boolean;
+  isCourseInstructor: boolean;
   isAdmin: boolean;
 };
 
@@ -375,7 +375,7 @@ function getLessonThread(lessonId: number): ThreadComment[] {
         id: row.authorId,
         name: row.authorName,
         avatarUrl: row.authorAvatarUrl,
-        isInstructor: row.authorId === course.instructorId,
+        isCourseInstructor: row.authorId === course.instructorId,
         isAdmin: row.authorRole === UserRole.Admin,
       },
       replies: [],
@@ -397,7 +397,7 @@ function getLessonThread(lessonId: number): ThreadComment[] {
     byId.get(row.parentId)?.replies.push(toThreadComment(row));
   }
 
-  // A deleted question with no replies left has nothing worth showing.
+  // A deleted comment with no replies left has nothing worth showing.
   return topLevel.filter((c) => !c.deleted || c.replies.length > 0);
 }
 
@@ -736,7 +736,7 @@ export async function loader({ params, request }: Route.LoaderArgs) {
       const progress = getLessonProgress(currentUserId, lessonId);
       lessonStatus = progress?.status ?? null;
 
-      // Get progress for all lessons in course (for curriculum sidebar)
+      // Get progress for all lessons in course (for course content sidebar)
       const progressRecords = getLessonProgressForCourse(
         currentUserId,
         course.id
@@ -835,7 +835,7 @@ export async function loader({ params, request }: Route.LoaderArgs) {
       title: courseWithDetails.title,
       slug: courseWithDetails.slug,
     },
-    curriculum: courseWithDetails.modules.map((m) => ({
+    courseContent: courseWithDetails.modules.map((m) => ({
       id: m.id,
       title: m.title,
       lessons: m.lessons.map((l) => ({
@@ -1009,7 +1009,7 @@ function useAutoplay() {
 export default function LessonViewer({ loaderData }: Route.ComponentProps) {
   const {
     course,
-    curriculum,
+    courseContent,
     module: mod,
     lesson,
     contentHtml,
@@ -1078,7 +1078,7 @@ export default function LessonViewer({ loaderData }: Route.ComponentProps) {
           <p className="mb-6 text-sm text-muted-foreground">
             PPP-discounted courses can only be accessed from the country where
             the purchase was made. This helps keep courses affordable for
-            students in lower-income regions.
+            students in lower-income countries.
           </p>
           <div className="flex items-center justify-center gap-3">
             <Link to={`/courses/${course.slug}`}>
@@ -1095,10 +1095,10 @@ export default function LessonViewer({ loaderData }: Route.ComponentProps) {
 
   return (
     <div className="flex">
-      {/* Curriculum Sidebar */}
-      <CurriculumSidebar
+      {/* Course Content Sidebar */}
+      <CourseContentSidebar
         course={course}
-        curriculum={curriculum}
+        courseContent={courseContent}
         currentLessonId={lesson.id}
         lessonProgressMap={lessonProgressMap}
         enrolled={enrolled}
@@ -1240,7 +1240,7 @@ export default function LessonViewer({ loaderData }: Route.ComponentProps) {
             </div>
           )}
 
-          {/* Questions & Discussion — confidential to people with access */}
+          {/* Comments — confidential to people with access */}
           {canViewContent && (
             <CommentThread
               comments={comments}
@@ -1304,15 +1304,15 @@ export default function LessonViewer({ loaderData }: Route.ComponentProps) {
   );
 }
 
-function CurriculumSidebar({
+function CourseContentSidebar({
   course,
-  curriculum,
+  courseContent,
   currentLessonId,
   lessonProgressMap,
   enrolled,
 }: {
   course: { id: number; title: string; slug: string };
-  curriculum: Array<{
+  courseContent: Array<{
     id: number;
     title: string;
     lessons: Array<{ id: number; title: string }>;
@@ -1322,7 +1322,7 @@ function CurriculumSidebar({
   enrolled: boolean;
 }) {
   // Find which module the current lesson belongs to
-  const currentModuleId = curriculum.find((m) =>
+  const currentModuleId = courseContent.find((m) =>
     m.lessons.some((l) => l.id === currentLessonId)
   )?.id;
 
@@ -1358,7 +1358,7 @@ function CurriculumSidebar({
         </div>
 
         <nav className="flex-1 p-2">
-          {curriculum.map((mod) => {
+          {courseContent.map((mod) => {
             const isExpanded = expandedModules.has(mod.id);
 
             return (
@@ -1683,7 +1683,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       message =
         "The lesson you're looking for doesn't exist or may have been removed.";
     } else if (error.status === 401) {
-      title = "Sign in required";
+      title = "Log in required";
       message =
         typeof error.data === "string"
           ? error.data
@@ -1705,7 +1705,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
             <Button variant="outline">Browse Courses</Button>
           </Link>
           <Link to="/dashboard">
-            <Button>My Dashboard</Button>
+            <Button>Dashboard</Button>
           </Link>
         </div>
       </div>

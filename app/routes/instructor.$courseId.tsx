@@ -1971,7 +1971,7 @@ export default function InstructorCourseEditor({
 
                   <div
                     className="flex items-center gap-2"
-                    title="Purchasing Power Parity: applies location-based discounts for students in lower-income countries"
+                    title="PPP Discount (Purchasing Power Parity): lowers the price for students in lower-income countries"
                   >
                     <Globe className="size-4 text-muted-foreground" />
                     <span className="text-sm font-medium">PPP:</span>
@@ -2219,7 +2219,7 @@ export default function InstructorCourseEditor({
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let title = "Something went wrong";
-  let message = "An unexpected error occurred while loading the course editor.";
+  let message = "An unexpected error occurred while loading the course.";
 
   if (isRouteErrorResponse(error)) {
     if (error.status === 404) {
@@ -2227,7 +2227,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       message =
         "The course you're looking for doesn't exist or may have been removed.";
     } else if (error.status === 401) {
-      title = "Sign in required";
+      title = "Log in required";
       message =
         typeof error.data === "string"
           ? error.data

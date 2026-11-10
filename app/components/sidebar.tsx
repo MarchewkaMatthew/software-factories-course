@@ -75,7 +75,7 @@ const navItems: NavItem[] = [
     roles: [UserRole.Instructor, UserRole.Admin],
   },
   {
-    label: "Questions",
+    label: "Comments",
     to: "/instructor/questions",
     icon: <MessageSquare className="size-4" />,
     roles: [UserRole.Instructor, UserRole.Admin],
@@ -87,7 +87,7 @@ const navItems: NavItem[] = [
     roles: [UserRole.Admin],
   },
   {
-    label: "Manage Courses",
+    label: "All Courses",
     to: "/admin/courses",
     icon: <Shield className="size-4" />,
     roles: [UserRole.Admin],
@@ -245,7 +245,7 @@ export function Sidebar({
             <Form method="post" action="/api/logout">
               <button
                 type="submit"
-                title="Sign out"
+                title="Log out"
                 className="rounded-md p-1 text-sidebar-foreground/50 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
               >
                 <LogOut className="size-4" />

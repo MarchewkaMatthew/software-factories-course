@@ -97,7 +97,7 @@ export function DevUI({ users, currentUser, devCountry, countryTierInfo, countri
             className="w-full justify-between"
             onClick={() => setOpen(!open)}
           >
-            Switch user
+            Switch User
             <ChevronDown
               className={cn(
                 "size-3 transition-transform",
@@ -157,10 +157,10 @@ export function DevUI({ users, currentUser, devCountry, countryTierInfo, countri
           </Form>
           {devCountry && (
             <div className="mt-1.5 text-xs text-muted-foreground">
-              Tier {countryTierInfo.tier} — {countryTierInfo.label}
+              PPP Tier {countryTierInfo.tier} — {countryTierInfo.label}
               {countryTierInfo.discount > 0 && (
                 <span className="ml-1 font-medium text-green-600">
-                  ({Math.round(countryTierInfo.discount * 100)}% discount)
+                  ({Math.round(countryTierInfo.discount * 100)}% PPP Discount)
                 </span>
               )}
             </div>

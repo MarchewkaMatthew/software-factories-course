@@ -84,7 +84,7 @@ function updateCourseStatus(id: number, status: CourseStatus) {
 
 export function meta() {
   return [
-    { title: "Manage Courses — Cadence" },
+    { title: "All Courses — Cadence" },
     { name: "description", content: "Manage all platform courses" },
   ];
 }
@@ -310,11 +310,11 @@ export default function AdminCourses({ loaderData }: Route.ComponentProps) {
           Home
         </Link>
         <span className="mx-2">/</span>
-        <span className="text-foreground">Manage Courses</span>
+        <span className="text-foreground">All Courses</span>
       </nav>
 
       <div className="mb-8">
-        <h1 className="text-3xl font-bold">Manage Courses</h1>
+        <h1 className="text-3xl font-bold">All Courses</h1>
         <p className="mt-1 text-muted-foreground">
           View all courses and manage their status
         </p>
@@ -378,7 +378,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
   if (isRouteErrorResponse(error)) {
     if (error.status === 401) {
-      title = "Sign in required";
+      title = "Log in required";
       message = typeof error.data === "string" ? error.data : "Please select a user from the DevUI panel.";
     } else if (error.status === 403) {
       title = "Access denied";

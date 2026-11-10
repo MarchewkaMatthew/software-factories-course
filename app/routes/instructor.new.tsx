@@ -257,7 +257,7 @@ export default function InstructorNewCourse({
               )}
               <p className="text-xs text-muted-foreground">
                 Markdown. Shown on the public course page — you can refine it
-                later in the course editor.
+                later when you edit the course.
               </p>
             </div>
 
@@ -328,7 +328,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
   if (isRouteErrorResponse(error)) {
     if (error.status === 401) {
-      title = "Sign in required";
+      title = "Log in required";
       message =
         typeof error.data === "string"
           ? error.data

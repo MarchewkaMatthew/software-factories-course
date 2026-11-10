@@ -271,7 +271,7 @@ export function meta({ loaderData }: Route.MetaArgs) {
   const title = loaderData?.course?.title ?? "Purchase";
   return [
     { title: `Confirm Purchase: ${title} — Cadence` },
-    { name: "description", content: `Confirm your enrollment in ${title}` },
+    { name: "description", content: `Confirm your purchase of ${title}` },
   ];
 }
 
@@ -416,12 +416,12 @@ export default function PurchaseConfirmation({
         className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground"
       >
         <ArrowLeft className="size-4" />
-        Back to course
+        Back to Course
       </Link>
 
       <h1 className="mb-2 text-2xl font-bold">Confirm Your Purchase</h1>
       <p className="mb-8 text-muted-foreground">
-        Review the details below before enrolling.
+        Review the details below before buying.
       </p>
 
       <Card>
@@ -590,7 +590,7 @@ export default function PurchaseConfirmation({
                     <p className="text-sm text-muted-foreground">
                       You&apos;ll receive {quantity} unique coupon{" "}
                       {quantity === 1 ? "link" : "links"} to share with your
-                      team members. Each link grants one person access to this
+                      team members. Each coupon enrolls one student in this
                       course.
                     </p>
 

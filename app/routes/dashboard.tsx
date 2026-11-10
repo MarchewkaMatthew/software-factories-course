@@ -294,7 +294,7 @@ export default function Dashboard({ loaderData }: Route.ComponentProps) {
           <GraduationCap className="mb-4 size-12 text-muted-foreground/50" />
           <h2 className="text-lg font-medium">No enrolled courses</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Browse the catalog to find courses and start learning.
+            Browse Courses to find one and start learning.
           </p>
           <Link to="/courses" className="mt-4">
             <Button>Browse Courses</Button>
@@ -414,7 +414,7 @@ export default function Dashboard({ loaderData }: Route.ComponentProps) {
                       >
                         <Button className="w-full" variant="outline">
                           <BookOpen className="mr-2 size-4" />
-                          Review Course
+                          Revisit Course
                         </Button>
                       </Link>
                     </CardFooter>
@@ -435,7 +435,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
   if (isRouteErrorResponse(error)) {
     if (error.status === 401) {
-      title = "Sign in required";
+      title = "Log in required";
       message = typeof error.data === "string" ? error.data : "Please select a user from the DevUI panel.";
     } else {
       title = `Error ${error.status}`;

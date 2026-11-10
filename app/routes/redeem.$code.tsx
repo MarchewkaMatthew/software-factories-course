@@ -77,7 +77,7 @@ function redeemCoupon(
     return {
       ok: false,
       error:
-        "This coupon can only be redeemed from the same country as the purchaser",
+        "This coupon can only be redeemed from the same country as the Team Admin who bought the seat",
     };
   }
 
@@ -214,7 +214,7 @@ export default function Redeem({
     <div className="mx-auto max-w-2xl p-6 lg:p-8">
       <h1 className="mb-2 text-2xl font-bold">Redeem Coupon</h1>
       <p className="mb-8 text-muted-foreground">
-        You&apos;ve been invited to enroll in a course.
+        This coupon enrolls you in a course.
       </p>
 
       <Card>
@@ -234,12 +234,12 @@ export default function Redeem({
               <div className="flex items-center justify-center gap-2 text-destructive">
                 <AlertCircle className="size-5" />
                 <span className="font-medium">
-                  This coupon has already been used
+                  This coupon has already been redeemed
                 </span>
               </div>
               <p className="mt-2 text-sm text-muted-foreground">
-                Someone has already claimed this seat. Please ask the person who
-                shared this link for a new coupon.
+                Someone has already redeemed this coupon. Please ask the Team Admin
+                who shared it for a new coupon.
               </p>
             </div>
           ) : alreadyEnrolled ? (
@@ -251,8 +251,8 @@ export default function Redeem({
                 </span>
               </div>
               <p className="mt-2 text-sm text-muted-foreground">
-                You already have access to this course. The coupon has not been
-                used, so it can still be shared with someone else.
+                You are already enrolled in this course. The coupon is still
+                unredeemed, so it can be shared with someone else.
               </p>
               <Link to={`/courses/${course.slug}`}>
                 <Button className="mt-4" size="lg">
@@ -264,12 +264,12 @@ export default function Redeem({
             <div className="rounded-lg bg-amber-50 p-4 dark:bg-amber-900/20">
               <div className="flex items-center justify-center gap-2 text-amber-700 dark:text-amber-400">
                 <Globe className="size-5" />
-                <span className="font-medium">Region restriction</span>
+                <span className="font-medium">PPP country mismatch</span>
               </div>
               <p className="mt-2 text-sm text-muted-foreground">
                 This coupon can only be redeemed from the same country as the
-                person who purchased it. Your location doesn&apos;t match the
-                purchaser&apos;s country.
+                Team Admin who bought the seat. Your country doesn&apos;t match the
+                PPP country of this coupon.
               </p>
             </div>
           ) : (

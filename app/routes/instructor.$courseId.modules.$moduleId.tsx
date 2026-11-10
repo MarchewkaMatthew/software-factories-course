@@ -218,7 +218,7 @@ export function HydrateFallback() {
   );
 }
 
-export default function InstructorModulePreview({
+export default function StudentViewPreview({
   loaderData,
 }: Route.ComponentProps) {
   const { course, module: mod, totalLessons, totalDuration } = loaderData;
@@ -337,7 +337,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
   if (isRouteErrorResponse(error)) {
     if (error.status === 401) {
-      title = "Not authenticated";
+      title = "Log in required";
       message =
         typeof error.data === "string"
           ? error.data
