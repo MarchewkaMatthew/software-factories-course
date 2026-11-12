@@ -89,8 +89,20 @@ _Avoid_: Claim, use, accept
 ## Refunds
 
 **Refund**:
-A Student's request to get their money back for a Purchase. A Refund is Requested, then Approved or Declined.
+A Student's request to get their money back for a Purchase. A Refund is Requested, then Approved or Declined by an Admin.
 _Avoid_: Chargeback, reversal, cancellation, cancel purchase
+
+**Approved**:
+The state of a Refund an Admin has accepted. The Student gets the Refund Amount back and loses their Enrollment in the Course; their Progress is kept. For a Team Purchase, its Unredeemed Coupons can no longer be Redeemed. An Approved Refund is final.
+_Avoid_: Accepted, granted, processed, refunded (as a state)
+
+**Declined**:
+The state of a Refund an Admin has turned down, always with a Decline Reason. A Declined Refund is final: that Purchase can never be refunded.
+_Avoid_: Rejected, denied, refused
+
+**Decline Reason**:
+The Admin's explanation, shown to the Student, of why a Refund was Declined.
+_Avoid_: Rejection reason, note
 
 **Refund Amount**:
 What a Refund returns: always the amount the Student paid for the Purchase.
@@ -99,7 +111,7 @@ What a Refund returns: always the amount the Student paid for the Purchase.
 The fourteen calendar days after a Purchase during which a Refund can be requested.
 
 **Refund Eligibility**:
-Whether a Purchase can still be refunded: inside the Refund Window, not too much of the Course watched or completed, not a Redeemed Seat, and no Refund already Requested.
+Whether a Purchase can still be refunded: inside the Refund Window, less than half the Course's Lessons Completed, under two hours of the Course watched, not a Redeemed Seat, and no Refund already Requested or Declined, and no earlier Purchase of the same Course with an Approved Refund. It is judged when the Refund is Requested; an Admin may still Decline a Refund that was eligible.
 
 ## Learning
 
