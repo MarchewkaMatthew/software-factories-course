@@ -98,3 +98,15 @@ _Avoid_: Watch cap, Viewing threshold
 **Notification**:
 A message Cadence shows one specific person inside the app, telling them something happened that concerns them.
 _Avoid_: Alert, Message, Toast
+
+**Unseen Notification**:
+A Notification its recipient hasn't looked at in their feed yet. Unseen Notifications are what the badge counts.
+_Avoid_: New, Unread (for the badge)
+
+**Unread Notification**:
+A Notification its recipient hasn't dealt with yet, meaning they haven't opened it. A Notification can be seen but still unread.
+_Avoid_: Unseen (for this), Pending, Unhandled
+
+**Retracted Notification**:
+A Notification Cadence has taken back out of every recipient's feed because what it asked them to act on no longer needs acting on, such as a Refund Request that another Platform Admin has already decided.
+_Avoid_: Deleted, Cancelled, Recalled
