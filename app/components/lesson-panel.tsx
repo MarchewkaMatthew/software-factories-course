@@ -1,7 +1,9 @@
-import { useFetcher } from "react-router";
+import { useEffect, useState } from "react";
+import { useFetcher, useLocation } from "react-router";
 import { MessageSquare, NotebookPen } from "lucide-react";
 import {
   lessonPanel,
+  tabForHash,
   type LessonPanelTab,
   type LessonPanelTabId,
 } from "~/modules/lesson-panel";
@@ -40,19 +42,18 @@ export function LessonPanel({
   canModerate: boolean;
   instructorName: string;
 }) {
-  const { tabs, defaultTab } = lessonPanel({
-    signedIn: currentUserId !== null,
-    comments,
-  });
+  const signedIn = currentUserId !== null;
+  const { tabs, defaultTab } = lessonPanel({ signedIn, comments });
+  const [tab, setTab] = usePanelTab(defaultTab);
 
   return (
     <Card className="mb-8 gap-0 py-0">
-      <Tabs defaultValue={defaultTab} className="gap-0">
+      <Tabs value={tab} onValueChange={setTab} className="gap-0">
         <div className="border-b px-4 py-3">
           <LessonPanelTabs tabs={tabs} />
         </div>
 
-        {currentUserId !== null && (
+        {signedIn && (
           <TabsContent
             value="notes"
             forceMount
@@ -78,6 +79,26 @@ export function LessonPanel({
       </Tabs>
     </Card>
   );
+}
+
+/**
+ * The open tab. The server never sees the URL hash, so the tab follows a
+ * `#comment-N` link only after hydration, then scrolls to that comment.
+ */
+function usePanelTab(defaultTab: LessonPanelTabId) {
+  const [tab, setTab] = useState<string>(defaultTab);
+  const { hash } = useLocation();
+
+  useEffect(() => {
+    const asked = tabForHash(hash);
+    if (!asked) return;
+    setTab(asked);
+    requestAnimationFrame(() =>
+      document.getElementById(hash.slice(1))?.scrollIntoView()
+    );
+  }, [hash]);
+
+  return [tab, setTab] as const;
 }
 
 function LessonPanelTabs({ tabs }: { tabs: LessonPanelTab[] }) {

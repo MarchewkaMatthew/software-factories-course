@@ -33,7 +33,12 @@ export function buildTabs({
     label: "Discussion",
     ...(count > 0 ? { count } : {}),
   };
-  // Notes are private to a person, so a visitor without a session has none.
+  // Notes belong to a Person; someone who isn't signed in has none.
   if (!signedIn) return [discussion];
   return [{ id: "notes", label: "Your notes" }, discussion];
+}
+
+/** True when the URL hash points at one comment, as notification links do. */
+export function linksToComment(hash: string): boolean {
+  return hash.startsWith("#comment-");
 }

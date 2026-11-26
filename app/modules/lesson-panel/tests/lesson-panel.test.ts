@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { lessonPanel, type CountableComment } from "../index";
+import { lessonPanel, tabForHash, type CountableComment } from "../index";
 
 function comment(overrides: Partial<CountableComment> = {}): CountableComment {
   return { deleted: false, replies: [], ...overrides };
@@ -16,7 +16,7 @@ describe("lessonPanel", () => {
     expect(panel.defaultTab).toBe("notes");
   });
 
-  it("gives a visitor without a session only the discussion", () => {
+  it("gives someone who isn't signed in only the discussion", () => {
     const panel = lessonPanel({ signedIn: false, comments: [comment()] });
 
     expect(panel.tabs).toEqual([
@@ -54,5 +54,16 @@ describe("lessonPanel", () => {
     });
 
     expect(panel.tabs[1]).toEqual({ id: "discussion", label: "Discussion" });
+  });
+});
+
+describe("tabForHash", () => {
+  it("opens the discussion for a link to a comment", () => {
+    expect(tabForHash("#comment-12")).toBe("discussion");
+  });
+
+  it("asks for no tab for any other hash", () => {
+    expect(tabForHash("#video")).toBeNull();
+    expect(tabForHash("")).toBeNull();
   });
 });

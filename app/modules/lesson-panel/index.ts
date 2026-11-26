@@ -1,5 +1,6 @@
 import {
   buildTabs,
+  linksToComment,
   type CountableComment,
   type LessonPanelTab,
   type LessonPanelTabId,
@@ -18,4 +19,13 @@ export function lessonPanel(input: {
 }): { tabs: LessonPanelTab[]; defaultTab: LessonPanelTabId } {
   const tabs = buildTabs(input);
   return { tabs, defaultTab: tabs[0].id };
+}
+
+/**
+ * The tab a URL hash asks for, or null. A notification links to
+ * `#comment-N`, which must open the Discussion: the comment is hidden while
+ * the Notes tab is open, so the browser cannot scroll to it.
+ */
+export function tabForHash(hash: string): LessonPanelTabId | null {
+  return linksToComment(hash) ? "discussion" : null;
 }
